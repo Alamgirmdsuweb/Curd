@@ -1,0 +1,238 @@
+// const modal = document.getElementById("modal");
+const btn = document.getElementById("new");
+const inputFile = document.getElementById("inputFile");
+
+let url = "https://jsonplaceholder.typicode.com/users";
+fetch(url)
+       
+    .then((data) => {
+        console.log(data);
+        return data.json();
+    })
+    .then((objectData) => {
+        console.log(objectData);
+        let tableData = "";
+        objectData.map((users) => {
+            tableData+= `<tr>
+         <td>${users.id}</td>
+         <td>${users.name}</td>
+         <td>${users.email}</td>
+         <td>${users.address.city}</td>
+         <td><button class="btnn">Edit</button></td>
+         <td><button class="btnn">Delete</button></td>
+         </tr>`;
+        });
+        document.getElementById("Tdshow").innerHTML = tableData;
+    });
+    
+
+// open modal NEW
+function openPopup() {
+    modal.classList.add("openModal");
+}
+function closePopup() {
+    modal.classList.remove("openModal");
+}
+
+
+const UserName = document.getElementById("inputName");
+const Email = document.getElementById("inputEmail");
+const textArea = document.getElementById("inputField");
+
+
+
+function create(){
+fetch(url,{
+    method: 'POST',
+    headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        name:UserName.value,
+        email:Email.value,
+        address:textArea.value
+      })
+      
+}).then((res)=>{
+    fetch(url)   .then((data) => {
+        console.log(data);
+        return data.json();
+    })
+    .then((objectData) => {
+        let newVal = {id:Math.random(), name:UserName.value,
+            email:Email.value,
+            address:textArea.value};
+            objectData.push(newVal);
+        console.log("objectData",objectData);
+        let tableData = "";
+        objectData.map((users) => {
+            tableData+= `<tr>
+         <td>${users.id}</td>
+         <td>${users.name}</td>
+         <td>${users.email}</td>
+         <td>${users.address.city}</td>
+         <td><button class="btnn">Edit</button></td>
+         <td><button class="btnn">Delete</button></td>
+         </tr>`;
+        });
+        document.getElementById("Tdshow").innerHTML = tableData;
+    });
+    if(!res.ok){
+        const message=`Error :$(res.status)`
+        throw new Error(message)
+    }
+    return res.json()
+})
+.then((res)=>console.log(res))
+.catch((err)=>console.log(err))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// extra 
+// const modal = document.getElementById("modal");
+// const btn = document.getElementById("new");
+// const inputFile = document.getElementById("inputFile");
+// const dlt= document.getElementById("delete")
+
+
+
+// let url = "https://jsonplaceholder.typicode.com/users";
+
+// const arrayFromApi = [];
+// fetch(url)
+       
+//     .then((data) => {
+//         console.log(data);
+//         return data.json();
+//     })
+//     .then((objectData) => {
+//         console.log(objectData);
+//         arrayFromApi.push(objectData);
+//         console.log("arrayFromApi",arrayFromApi);
+//         let tableData = "";
+//         objectData.map((users) => {
+//             tableData+= `<tr>
+//          <td>${users.id}</td>
+//          <td>${users.name}</td>
+//          <td>${users.email}</td>
+//          <td>${users.address.city}</td>
+//          <td><button class="btnn" id="editbtn"onclick="editbtn()">Edit</button></td>
+//          <td><button class="btnn" id="deletbtn" onclick="Deletbtn()">Delete</button></td>
+//          </tr>`;
+//         });
+//         document.getElementById("Tdshow").innerHTML = tableData;
+//     });
+    
+
+// // open modal NEW
+// function openPopup() {
+//     modal.classList.add("openModal");
+    
+// }
+// function closePopup() {
+//     modal.classList.remove("openModal");
+// }
+
+
+
+// const UserName = document.getElementById("inputName");
+// const Email = document.getElementById("inputEmail");
+// const textArea = document.getElementById("inputField");
+
+
+
+// function create(){
+// fetch(url,{
+//     method: 'POST',
+//     headers: {
+//         'Content-type': 'application/json; charset=UTF-8',
+//       },
+//       body: JSON.stringify({
+//         name:UserName.value,
+//         email:Email.value,
+//         address:{city:textArea.value}
+//       })
+      
+// }).then((data)=>{
+  
+//     return data.json()
+// })
+// .then((res)=>{
+
+//     arrayFromApi[0].push(res);
+  
+//      let tableData = "";
+//     arrayFromApi[0].map((users,index) => {
+//         tableData+= `<tr>
+
+//      <td>${index+1}</td>
+//      <td>${users.name}</td>
+//      <td>${users.email}</td>
+//      <td>${users.address.city}</td>
+//      <td><button class="btnn" id="editbtn"onclick="editbtn()">Edit</button></td>
+//          <td><button class="btnn" id="deletbtn" onclick="Deletbtn()">Delete</button></td>
+//      </tr>`;
+//     });
+//     document.getElementById("Tdshow").innerHTML = tableData;
+//     console.log("data",arrayFromApi[0])
+// })
+  
+    
+// .catch((err)=>console.log(err))
+
+
+// }
+
+// function Deletbtn(){
+// // const dltbtn=document.getElementById("delete")
+
+// dlt.classList.add("Modal1");
+
+// console.log("ff");
+
+// }
+// function Submit(index){
+//     console.log("ok");
+//     dlt.classList.remove("Modal1");
+//     document.getElementById("table").deleteRow(1);
+
+
+// }
+// // function openPopup() {
+// //     modal.classList.add("Modal1");
+    
+// // }
+
+// function Deletbtn(){
+//     console.log("hu");
+//     document.getElementById("delete").hidden = false;
+// }
+// function closeConfirmBox() {
+//     document.getElementById("delete").hidden = true;
+//   }
+//   function cancle(answer) {
+//     if (answer) {
+//       alert("yes");
+//     } else {
+//       alert("no");
+//     }
+//     closeConfirmBox();
+//   }
+
+
+// function cancle(){
+//     console.log("okk");
+// }
